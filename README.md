@@ -53,7 +53,7 @@ Upload the data for the internal LittleFS with the installed tool "ESP32 LittleF
 
 Then compile with upload. If all went fine, the status bar at the bottom should show "09 RICs".
 
-### Configuration
+## Configuration
 
 Configure the device through the AP and the configuration webpage for the first time. If the device reboots then and connects to your local WLAN, the configuration page is accessible throug the IP displayed bottom left of the status bar.
 
