@@ -1,0 +1,118 @@
+body
+{
+    font-family: Arial, Helvetica, sans-serif;
+    background: #202124;
+    color: #ffffff;
+    margin: 0;
+    padding: 0;
+}
+
+.container
+{
+    max-width: 700px;
+    margin: auto;
+    padding: 20px;
+}
+
+.header
+{
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.card
+{
+    background: #2d2f31;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+}
+
+h1
+{
+    margin: 0;
+}
+
+h2
+{
+    margin-top: 0;
+}
+
+label
+{
+    display: block;
+    margin-top: 12px;
+    margin-bottom: 4px;
+}
+
+input
+{
+    width: 100%;
+    padding: 10px;
+    box-sizing: border-box;
+    border: none;
+    border-radius: 5px;
+}
+
+.status-row
+{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+}
+
+.button-row
+{
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.btn-download
+{
+    display: inline-block;
+    padding: 12px;
+    background: #2196f3;
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+}
+
+button
+{
+    flex: 1;
+    border: none;
+    border-radius: 5px;
+    padding: 12px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.save
+{
+    background: #4caf50;
+    color: white;
+}
+
+.reset
+{
+    background: #d32f2f;
+    color: white;
+}
+
+#message
+{
+    margin-top: 20px;
+    font-weight: bold;
+}
+
+.success
+{
+    color: #7CFC00;
+}
+
+.error
+{
+    color: #ff7070;
+}

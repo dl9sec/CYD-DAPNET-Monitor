@@ -1,0 +1,101 @@
+async function loadConfig() {
+    try {
+        const response = await fetch("/api/config");
+        const cfg = await response.json();
+
+        document.getElementById("ssid").value = cfg.ssid || "";
+        document.getElementById("callsign").value = cfg.callsign || "";
+        document.getElementById( "host").value = cfg.host || "";
+        document.getElementById( "port").value = cfg.port || 43434;
+    } catch (e) { console.error(e); }
+}
+
+async function loadStatus() {
+    try {
+        const response = await fetch("/api/status");
+        const status = await response.json();
+
+        document.getElementById("wifiStatus").innerText = status.wifi ? "Connected" : "Disconnected";
+        document.getElementById("ipAddress").innerText = status.ip || "-";
+        document.getElementById("apStatus").innerText =  status.ap ? "Yes" : "No";
+        document.getElementById("apIp").innerText = status.ap_ip || "-";
+    } catch (e) { console.error(e); }
+}
+
+async function saveConfig() {
+    const data = { ssid:     document.getElementById("ssid").value,
+                   password: document.getElementById("password").value,
+                   callsign: document.getElementById("callsign").value,
+                   authkey:  document.getElementById("authkey").value,
+                   host:     document.getElementById("host").value,
+                   port:     parseInt(document.getElementById("port").value)
+    };
+
+    try {
+        await fetch("/api/config", {
+            method: "POST",
+			headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
+        });
+
+        showMessage("Configuration saved. Reboot ...", true);
+    } catch (e) { showMessage("Error while saving.", false); }
+}
+
+async function factoryReset() {
+    if ( !confirm("Factory reset?") ) { return; }
+
+    try {
+		await fetch("/api/reset", {
+            method: "POST"
+        });
+
+        showMessage("Reset executed. Reboot ...", true);
+    } catch (e) { showMessage("Reset failed.", false); }
+}
+
+async function uploadWhitelist()
+{
+    const file = document.getElementById("whitelistFile").files[0];
+
+    if( !file )
+    {
+        showMessage("No file selected.", false);
+        return;
+    }
+
+    const form = new FormData();
+
+    form.append("file", file);
+
+    try
+    {
+        await fetch("/api/whitelist", {
+                method: "POST",
+                body: form
+            }
+        );
+
+        showMessage("Upload successful.", true);
+    }
+    catch(e) { showMessage("Upload failed.", false); }
+}
+
+function showMessage(txt, success) {
+    const m = document.getElementById("message");
+
+    m.innerText = txt;
+
+    if ( success ) {
+		m.className = "success";
+	}
+	else {
+		m.className = "error";
+    }
+}
+
+window.onload = () => {
+    loadConfig();
+    loadStatus();
+    setInterval(loadStatus, 5000);
+};

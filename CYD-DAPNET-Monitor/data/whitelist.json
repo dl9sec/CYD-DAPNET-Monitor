@@ -1,0 +1,40 @@
+{
+    "entries": [
+        {
+            "ric": 1003,
+            "name": "DWD"
+        },
+        {
+            "ric": 1004,
+            "name": "DX KW"
+        },
+        {
+            "ric": 1005,
+            "name": "DX VHF/UHF"
+        },
+        {
+            "ric": 1010,
+            "name": "DX Digimode"
+        },		
+        {
+            "ric": 1039,
+            "name": "BKK-NINA"
+        },		
+        {
+            "ric": 1040,
+            "name": "Notfunk DL"
+        },		
+        {
+            "ric": 1051,
+            "name": "SAT DL"
+        },		
+        {
+            "ric": 1080,
+            "name": "APRS WX DL-BW"
+        },		
+        {
+            "ric": 1081,
+            "name": "DWD Alerts DL-BW"
+        },		
+    ]
+}
