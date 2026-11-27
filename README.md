@@ -9,7 +9,7 @@ The code could have some serious errors!**
 
 ## Features
 
-  * WLAN connection to the network
+  * WLAN connection to the network (yes, also a radio, but on the hampager frequency ;-) )
   * Configuration via a built-in web page
   * Initial configuration via an access point (SSID: `CYD-DAPNET-Monitor`, password: `I@maHAM`) and the IP `192.168.4.1`
   * RIC whitelisting. A "whitelist.json" can be downloaded, modified and uploaded again to the internal LittleFS
@@ -57,7 +57,7 @@ Then compile with upload. If all went fine, the status bar at the bottom should 
 
 Configure the device through the AP and the configuration webpage for the first time. If the device reboots then and connects to your local WLAN, the configuration page is accessible throug the IP displayed bottom left of the status bar.
 
-If not happened before, enter your ham radio callsign and your "AuthKey" (provided by the DAPNET maintainers when applied for access to DAPNET).
+If not happened before, enter your ham radio callsign and your "AuthKey" (provided by the DAPNET maintainers when applied for access to DAPNET and applied for a e.g. hotspot DAPNET transmitter).
 
 <img src="images/whitelist.png" alt="RIC whitelist" width="60%" height="60%">
 
