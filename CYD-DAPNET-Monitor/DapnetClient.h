@@ -10,6 +10,9 @@
 #define DAPNET_RECONNECT_INTERVAL   10000UL
 #define DAPNET_SOCKET_TIMEOUT      120000UL
 #define DAPNET_QUEUE_SIZE              32
+#define DAPNET_WATCHDOG_TIMEOUT    300000UL // 5 minutes
+//#define DAPNET_WATCHDOG_TIMEOUT    900000UL // 15 minutes
+
 
 // Decode DAPNET message
 struct DapnetMessage
@@ -81,6 +84,9 @@ private:
     // ACK
     void acknowledge(uint8_t counter);
 
+    // DAPNET Watchdog
+    void checkWatchdog();
+
 private:
 
     // TCP Client
@@ -99,6 +105,9 @@ private:
 
     // Reconnect timer
     unsigned long reconnectTimer;
+
+    // Last received DAPNET line, used by watchdog
+    unsigned long lastReceiveTime;
 
     // Message queue
     DapnetMessage    queue[DAPNET_QUEUE_SIZE];

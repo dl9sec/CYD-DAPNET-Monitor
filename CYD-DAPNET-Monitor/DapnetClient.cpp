@@ -5,17 +5,18 @@
 
 DapnetClient::DapnetClient()
 {
-    host           = "";
-    port           = 43434;
-    callsign       = "";
-    authkey        = "";
-    loggedIn       = false;
-    tcpConnected   = false;
-    reconnectTimer = 0;
-    timeslots      = "";
-    queueHead      = 0;
-    queueTail      = 0;
-    queueCount     = 0;
+    host            = "";
+    port            = 43434;
+    callsign        = "";
+    authkey         = "";
+    loggedIn        = false;
+    tcpConnected    = false;
+    reconnectTimer  = 0;
+    lastReceiveTime = 0;    
+    timeslots       = "";
+    queueHead       = 0;
+    queueTail       = 0;
+    queueCount      = 0;
     
 }
 
@@ -70,6 +71,8 @@ void DapnetClient::disconnect()
 
     tcpConnected = false;
     loggedIn     = false;
+
+    lastReceiveTime = 0;
 
     Serial.println("DAPNET disconnected.");
 }
@@ -249,6 +252,8 @@ bool DapnetClient::login()
 
     loggedIn = true;
 
+    lastReceiveTime = millis();
+
     Serial.print("Timeslots = "); Serial.println(timeslots);
     Serial.println("Connected to DAPNET. Logged in.");
 
@@ -296,6 +301,8 @@ bool DapnetClient::decodePayload(const String& payload, DapnetMessage& msg)
 
 bool DapnetClient::processLine(const String& line)
 {
+    lastReceiveTime = millis();
+    
     if( !line.startsWith("#") )
     {
         return false;
@@ -368,7 +375,6 @@ void DapnetClient::loop()
     {
         loggedIn = false;
         reconnect();
-
         return;
     }
 
@@ -388,4 +394,39 @@ void DapnetClient::loop()
         processLine(line);
     }
 
+    checkWatchdog();
+
+}
+
+void DapnetClient::checkWatchdog()
+{
+    if( !loggedIn )
+    {
+        return;
+    }
+
+    if(lastReceiveTime == 0)
+    {
+        return;
+    }
+
+    if( millis() - lastReceiveTime < DAPNET_WATCHDOG_TIMEOUT )
+    {
+        return;
+    }
+
+    Serial.println();
+    Serial.println("********************************");
+    Serial.println("DAPNET WATCHDOG TIMEOUT");
+    Serial.println("No data received from server.");
+
+    Serial.print("WiFi connected : "); Serial.println(WiFi.isConnected());
+    Serial.print("TCP connected  : "); Serial.println(client.connected());
+
+    Serial.println("Reconnecting...");
+    Serial.println("********************************" );
+
+    disconnect();
+    reconnect();
+    
 }
